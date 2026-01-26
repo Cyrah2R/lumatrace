@@ -13,7 +13,10 @@ public class PhotoRegistrationResponse {
     private UUID photoId;
     private LocalDateTime createdAt;
 
-    // Payload lógico
+    // Payload de C2PA / LumaTrace
     private String canonicalJson;
     private String canonicalHash;
+
+    // La semilla matemática derivada para el Core
+    private long watermarkSeed;
 }
