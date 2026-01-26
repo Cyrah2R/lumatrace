@@ -40,7 +40,7 @@ public class LumaTraceCLI {
                     printHelp();
             }
         } catch (Exception e) {
-            System.err.println("\n❌ CRITICAL ERROR: " + e.getMessage());
+            System.err.println("\n[ERROR] CRITICAL ERROR: " + e.getMessage());
             e.printStackTrace(); // Keep stacktrace for debugging in beta
             System.exit(2);
         }
@@ -50,7 +50,7 @@ public class LumaTraceCLI {
         String inputFile = args.length > 1 ? args[1] : "original.jpg";
         String outputFile = args.length > 2 ? args[2] : "secured.jpg";
 
-        System.out.println("Processing: " + inputFile);
+        System.out.println("[INFO] Processing: " + inputFile);
         File file = new File(inputFile);
         if (!file.exists()) throw new IllegalArgumentException("Input file not found: " + inputFile);
 
@@ -62,7 +62,9 @@ public class LumaTraceCLI {
         long duration = System.currentTimeMillis() - start;
 
         ImageIO.write(out, "jpg", new File(outputFile));
-        System.out.printf("✔ SECURED in %dms. Output saved to: %s%n", duration, outputFile);
+
+        // CAMBIO AQUÍ: Usamos [SUCCESS] en vez de ✔ para evitar problemas de encoding
+        System.out.printf("[SUCCESS] SECURED in %dms. Output saved to: %s%n", duration, outputFile);
     }
 
     private static void runDetect(String[] args) throws Exception {
@@ -93,7 +95,8 @@ public class LumaTraceCLI {
 
     private static void printHelp() {
         System.out.println("Usage:");
-        System.out.println("  java -jar lumatrace.jar -e [input.jpg] [output.jpg]");
-        System.out.println("  java -jar lumatrace.jar -d [input.jpg]");
+        // He actualizado el nombre del JAR para que coincida con el que genera Maven
+        System.out.println("  java -jar lumatrace-core-1.0.0.jar -e [input.jpg] [output.jpg]");
+        System.out.println("  java -jar lumatrace-core-1.0.0.jar -d [input.jpg]");
     }
 }
