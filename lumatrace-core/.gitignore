@@ -1,0 +1,19 @@
+# Ignorar binarios de Java
+out/
+bin/
+*.class
+
+# Ignorar archivos de configuración de IntelliJ
+.idea/
+*.iml
+
+# Ignorar imágenes generadas por los tests (¡Muy importante!)
+*.jpg
+*.png
+
+# Ignorar archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Internal design notes (not for publication)
+LUMATRACE_DESIGN.md
