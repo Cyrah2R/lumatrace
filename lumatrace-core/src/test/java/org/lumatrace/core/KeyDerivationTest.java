@@ -22,10 +22,14 @@ class KeyDerivationTest {
     void testAvalancheEffect() {
         long masterKey = 0xDEADBEEF;
 
+        // Un pequeño cambio (una letra) debe cambiar radicalmente la semilla
         long seed1 = KeyDerivation.deriveSeed(masterKey, "userA", "content");
         long seed2 = KeyDerivation.deriveSeed(masterKey, "userB", "content");
 
-        // Un pequeño cambio en el input debe cambiar drásticamente el output
         assertNotEquals(seed1, seed2, "Diferentes usuarios deben generar semillas diferentes");
+
+        // Verificar que no son trivialmente similares (ej. solo +1 de diferencia)
+        long diff = seed1 ^ seed2;
+        assertTrue(Long.bitCount(diff) > 10, "El efecto avalancha del hash debe alterar múltiples bits");
     }
 }
