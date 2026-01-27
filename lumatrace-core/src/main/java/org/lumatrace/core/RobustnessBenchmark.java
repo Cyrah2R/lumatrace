@@ -14,59 +14,59 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * In-Memory Robustness Benchmark.
- * Validates resilience against JPEG compression, Scaling, and Cropping
- * without disk I/O overhead.
+ * Forensic Robustness Validation Suite.
+ * Automated evaluation of signal resilience against common signal processing
+ * Attack Vectors: DCT compression, spatial interpolation, and geometric clipping.
  */
 public class RobustnessBenchmark {
 
-    private static final String DEFAULT_USER = "benchmark-user";
-    private static final String DEFAULT_CONTENT = "benchmark-content";
+    private static final String BENCHMARK_SESSION_UID = "internal-audit-v3";
+    private static final String TEST_PAYLOAD = "robustness-validation-vector";
+    private static final double SIGMA_CONFIDENCE_THRESHOLD = 4.0;
 
+    /**
+     * Executes a comprehensive robustness audit on a target asset.
+     * * @param sourceFile The master asset for signal injection.
+     * @param masterKey  The 64-bit root security key.
+     */
     public void runSuite(File sourceFile, long masterKey) {
         try {
-            System.out.println("Loading source image...");
+            System.out.println("[IO_INIT] Accessing master asset: " + sourceFile.getName());
             BufferedImage original = ImageIO.read(sourceFile);
-            if (original == null) throw new IOException("Cannot read image");
+            if (original == null) throw new IOException("Signal decode failure");
 
-            // 1. Embed Reference
             WatermarkEngine engine = new WatermarkEngine();
-            System.out.println("Embedding reference watermark...");
-            BufferedImage watermarked = engine.embedWatermark(original, masterKey, DEFAULT_USER, DEFAULT_CONTENT);
+            System.out.println("[PROC_EMBED] Generating reference watermarked asset...");
+            BufferedImage watermarked = engine.embedWatermark(original, masterKey, BENCHMARK_SESSION_UID, TEST_PAYLOAD);
 
-            System.out.println("\n╔══════════════════════════════════════════════════════════════╗");
-            System.out.println("║                ROBUSTNESS BENCHMARK RESULTS                  ║");
-            System.out.println("╠══════════════════════════════════════════════════════════════╣");
-            System.out.printf("║ %-25s │ %-10s │ %-8s │ %-8s ║%n", "ATTACK TYPE", "PARAM", "SIGMA", "VERDICT");
-            System.out.println("╠══════════════════════════════════════════════════════════════╣");
+            System.out.println("\n--- FORENSIC ROBUSTNESS AUDIT REPORT ---");
+            System.out.printf("%-20s | %-12s | %-12s | %-10s%n", "VECTOR", "PARAMETERS", "STAT_SIGMA", "VERDICT");
+            System.out.println("------------------------------------------------------------------");
 
-            // Instantiate detector once
             WatermarkDetector detector = new WatermarkDetector();
 
-            // Run Tests
-            testJpeg(watermarked, masterKey, 0.9f, detector);
-            testJpeg(watermarked, masterKey, 0.7f, detector);
-            testJpeg(watermarked, masterKey, 0.5f, detector);
+            // Attack Vector A: Discrete Cosine Transform (JPEG Degradation)
+            runDctAttack(watermarked, masterKey, 0.90f, detector);
+            runDctAttack(watermarked, masterKey, 0.70f, detector);
+            runDctAttack(watermarked, masterKey, 0.50f, detector);
 
-            System.out.println("╠══════════════════════════════════════════════════════════════╣");
+            // Attack Vector B: Spatial Resampling (Interpolation)
+            runResamplingAttack(watermarked, masterKey, 0.75, detector);
+            runResamplingAttack(watermarked, masterKey, 0.50, detector);
 
-            testScale(watermarked, masterKey, 0.75, detector);
-            testScale(watermarked, masterKey, 0.50, detector);
+            // Attack Vector C: Geometric Clipping (Center Crop)
+            runClippingAttack(watermarked, masterKey, 0.80, detector);
+            runClippingAttack(watermarked, masterKey, 0.50, detector);
 
-            System.out.println("╠══════════════════════════════════════════════════════════════╣");
-
-            testCrop(watermarked, masterKey, 0.80, detector);
-            testCrop(watermarked, masterKey, 0.50, detector);
-
-            System.out.println("╚══════════════════════════════════════════════════════════════╝\n");
+            System.out.println("------------------------------------------------------------------");
+            System.out.println("[AUDIT_COMPLETE] Session state: Terminated.\n");
 
         } catch (Exception e) {
-            System.err.println("Benchmark critical failure: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("[CRITICAL_BENCHMARK_FAILURE] Audit aborted: " + e.getMessage());
         }
     }
 
-    private void testJpeg(BufferedImage img, long key, float quality, WatermarkDetector detector) {
+    private void runDctAttack(BufferedImage img, long key, float quality, WatermarkDetector detector) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
@@ -80,14 +80,14 @@ public class RobustnessBenchmark {
             writer.dispose();
 
             BufferedImage attacked = ImageIO.read(new ByteArrayInputStream(baos.toByteArray()));
-            runDetection("JPEG Compression", String.format("Q=%.0f%%", quality * 100), attacked, key, detector);
+            evaluateVector("DCT_COMPRESSION", String.format("Q=%.2f", quality), attacked, key, detector);
 
         } catch (IOException e) {
-            printError("JPEG", "Error");
+            logVectorError("DCT_COMPRESSION", "IO_CODEC_FAILURE");
         }
     }
 
-    private void testScale(BufferedImage img, long key, double scale, WatermarkDetector detector) {
+    private void runResamplingAttack(BufferedImage img, long key, double scale, WatermarkDetector detector) {
         int w = (int) (img.getWidth() * scale);
         int h = (int) (img.getHeight() * scale);
         BufferedImage scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
@@ -96,31 +96,30 @@ public class RobustnessBenchmark {
         g.drawImage(img, 0, 0, w, h, null);
         g.dispose();
 
-        runDetection("Rescaling", String.format("%.0f%%", scale * 100), scaled, key, detector);
+        evaluateVector("RESAMPLING", String.format("S=%.2fx", scale), scaled, key, detector);
     }
 
-    private void testCrop(BufferedImage img, long key, double keepRatio, WatermarkDetector detector) {
+    private void runClippingAttack(BufferedImage img, long key, double ratio, WatermarkDetector detector) {
         int w = img.getWidth();
         int h = img.getHeight();
-        int newW = (int) (w * keepRatio);
-        int newH = (int) (h * keepRatio);
+        int newW = (int) (w * ratio);
+        int newH = (int) (h * ratio);
         BufferedImage cropped = img.getSubimage((w - newW) / 2, (h - newH) / 2, newW, newH);
 
-        runDetection("Center Crop", String.format("Keep %.0f%%", keepRatio * 100), cropped, key, detector);
+        evaluateVector("GEO_CLIPPING", String.format("R=%.2f", ratio), cropped, key, detector);
     }
 
-    private void runDetection(String attack, String param, BufferedImage img, long key, WatermarkDetector detector) {
-        // Adapt V3 Detector Result to Reporting DTO
-        WatermarkDetector.DetectionResult v3Result = detector.detect(img, key, DEFAULT_USER, DEFAULT_CONTENT);
+    private void evaluateVector(String vector, String param, BufferedImage img, long key, WatermarkDetector detector) {
+        WatermarkDetector.DetectionResult res = detector.detect(img, key, BENCHMARK_SESSION_UID, TEST_PAYLOAD);
+        double sigma = res.confidenceZ();
 
-        // Map v3 result (record) to benchmark display logic
-        double sigma = v3Result.confidenceZ();
-        String icon = v3Result.detected() ? "✅ PASS" : (sigma > 2.5 ? "⚠️ WEAK" : "❌ FAIL");
+        // Status determination based on empirical Z-score thresholds
+        String verdict = (sigma >= SIGMA_CONFIDENCE_THRESHOLD) ? "VERIFIED" : (sigma > 2.5 ? "MARGINAL" : "FAILED");
 
-        System.out.printf("║ %-25s │ %-10s │ %-8.4f │ %-8s ║%n", attack, param, sigma, icon);
+        System.out.printf("%-20s | %-12s | %-12.4f | %-10s%n", vector, param, sigma, verdict);
     }
 
-    private void printError(String name, String param) {
-        System.out.printf("║ %-25s │ %-10s │ %-8s │ %-8s ║%n", name, param, "ERR", "ERROR");
+    private void logVectorError(String vector, String msg) {
+        System.out.printf("%-20s | %-12s | %-12s | %-10s%n", vector, "N/A", "ERR_CODE", msg);
     }
 }

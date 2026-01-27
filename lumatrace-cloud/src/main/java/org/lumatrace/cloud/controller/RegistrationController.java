@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Main entry point for asset registration and provenance binding.
+ */
 @RestController
 @RequestMapping("/api/v1/photos")
 public class RegistrationController {

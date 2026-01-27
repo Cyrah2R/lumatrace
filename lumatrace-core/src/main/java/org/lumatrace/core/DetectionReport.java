@@ -1,22 +1,28 @@
 package org.lumatrace.core;
 
 /**
- * Immutable Data Carrier for detection results.
- * Uses Java 21 Records for concise, thread-safe data modeling.
+ * Forensic analysis report containing signal metrics and statistical significance.
+ * Implemented as a Java 21 Record for immutability and high-concurrency safety.
  */
 public record DetectionReport(
-        double sigma,
-        double scale,
-        long executionTimeMs,
-        DetectionVerdict verdict
+        double confidenceSigma,
+        double estimatedScale,
+        long latencyMs,
+        AnalysisVerdict status
 ) {
-    public DetectionReport(double sigma, double scale, long executionTimeMs) {
-        this(sigma, scale, executionTimeMs, DetectionVerdict.fromSigma(sigma));
+    /**
+     * Canonical constructor for automated status derivation based on statistical significance.
+     */
+    public DetectionReport(double confidenceSigma, double estimatedScale, long latencyMs) {
+        this(confidenceSigma, estimatedScale, latencyMs, AnalysisVerdict.evaluate(confidenceSigma));
     }
 
+    /**
+     * Serializes telemetry for industrial logging or console output.
+     */
     @Override
     public String toString() {
-        return String.format("Sigma: %.2f | Scale: %.2fx | Verdict: %s | Time: %dms",
-                sigma, scale, verdict, executionTimeMs);
+        return String.format("[TELEMETRY] Confidence: σ=%.4f | Scale: %.2fx | Status: %s | Latency: %dms",
+                confidenceSigma, estimatedScale, status, latencyMs);
     }
 }

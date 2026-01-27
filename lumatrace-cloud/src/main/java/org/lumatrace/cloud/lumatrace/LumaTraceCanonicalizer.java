@@ -8,6 +8,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
+/**
+ * Provides deterministic JSON serialization for manifest integrity.
+ */
 public final class LumaTraceCanonicalizer {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()

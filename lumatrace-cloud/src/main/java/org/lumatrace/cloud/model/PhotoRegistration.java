@@ -2,10 +2,12 @@ package org.lumatrace.cloud.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Entity representing a secure photo registration in the provenance registry.
+ */
 @Entity
 @Table(name = "photo_registrations")
 public class PhotoRegistration {
@@ -25,9 +27,7 @@ public class PhotoRegistration {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    protected PhotoRegistration() {
-        // JPA only
-    }
+    protected PhotoRegistration() {}
 
     public PhotoRegistration(String userId, String deviceModel, Double latitude, Double longitude) {
         this.userId = userId;
@@ -36,27 +36,10 @@ public class PhotoRegistration {
         this.longitude = longitude;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getDeviceModel() {
-        return deviceModel;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+    public UUID getId() { return id; }
+    public String getUserId() { return userId; }
+    public String getDeviceModel() { return deviceModel; }
+    public Double getLatitude() { return latitude; }
+    public Double getLongitude() { return longitude; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }
