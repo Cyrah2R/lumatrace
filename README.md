@@ -30,7 +30,7 @@ Desde la raíz del proyecto:
 docker-compose up -d --build
 ```
 
-### 2. . Verificar estado
+### 2. Verificar estado
 Asegúrate de que ambos contenedores están en estado "Up":
 ```bash
 docker ps
