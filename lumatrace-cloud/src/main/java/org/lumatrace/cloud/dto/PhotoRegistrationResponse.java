@@ -1,22 +1,47 @@
 package org.lumatrace.cloud.dto;
 
-import lombok.Builder;
-import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Data
-@Builder
 public class PhotoRegistrationResponse {
 
-    private UUID photoId;
-    private LocalDateTime createdAt;
+    private final UUID photoId;
+    private final LocalDateTime createdAt;
+    private final String canonicalJson;
+    private final String canonicalHash;
+    private final long watermarkSeed;
 
-    // Payload de C2PA / LumaTrace
-    private String canonicalJson;
-    private String canonicalHash;
+    public PhotoRegistrationResponse(
+            UUID photoId,
+            LocalDateTime createdAt,
+            String canonicalJson,
+            String canonicalHash,
+            long watermarkSeed
+    ) {
+        this.photoId = photoId;
+        this.createdAt = createdAt;
+        this.canonicalJson = canonicalJson;
+        this.canonicalHash = canonicalHash;
+        this.watermarkSeed = watermarkSeed;
+    }
 
-    // La semilla matemática derivada para el Core
-    private long watermarkSeed;
+    public UUID getPhotoId() {
+        return photoId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getCanonicalJson() {
+        return canonicalJson;
+    }
+
+    public String getCanonicalHash() {
+        return canonicalHash;
+    }
+
+    public long getWatermarkSeed() {
+        return watermarkSeed;
+    }
 }
