@@ -1,19 +1,125 @@
-# Ignorar binarios de Java
-out/
-bin/
-*.class
+# ============================================================================
+# LumaTrace Git Ignore
+# ============================================================================
 
-# Ignorar archivos de configuración de IntelliJ
+# Build outputs
+target/
+bin/
+build/
+out/
+*.jar
+*.war
+*.ear
+*.class
+*.bak
+
+# IDE
 .idea/
 *.iml
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
 
-# Ignorar imágenes generadas por los tests (¡Muy importante!)
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+!logs/.gitkeep
+
+# Config files (production)
+lumatrace.properties
+*.key
+*.secret
+*.pem
+*.p12
+*.jks
+*.keystore
+
+# Generated test outputs
+test-output/
+benchmark_results/
 *.jpg
 *.png
+*.jpeg
+!original.jpg  # Keep sample image
+!test-images/  # Keep test image directory
 
-# Ignorar archivos del sistema
-.DS_Store
-Thumbs.db
+# Maven wrapper
+.mvn/wrapper/
+mvnw
+mvnw.cmd
 
-# Internal design notes (not for publication)
-LUMATRACE_DESIGN.md
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Documentation
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+
+# IDE specific
+.idea/
+*.ipr
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# NetBeans
+nbproject/
+nb-configuration.xml
+
+# Visual Studio Code
+.history/
+
+# System specific
+*.orig
+
+# Backup files
+*~
+*.backup

@@ -1,28 +1,14 @@
-# LumaTrace
+# LumaTrace Core Engine
 
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![Platform](https://img.shields.io/badge/platform-jvm-gray)
-![License](https://img.shields.io/badge/license-MIT-blue)
-![C2PA Compliance](https://img.shields.io/badge/C2PA-Soft%20Binding-orange)
+![Java](https://img.shields.io/badge/java-21-orange)
+![C2PA](https://img.shields.io/badge/C2PA-Soft%20Binding-orange)
+![Performance](https://img.shields.io/badge/performance-O(n)-green)
 
-**LumaTrace** is a reference implementation of **Adaptive Spatial Watermarking**, designed to serve as a robust Soft Binding mechanism within the C2PA (Coalition for Content Provenance and Authenticity) ecosystem.
+**LumaTrace Core** es la implementación de referencia del algoritmo de **Marca de Agua Espacial Adaptativa**. Esta librería mitiga la vulnerabilidad del "Analog Hole" incrustando identificadores persistentes e invisibles directamente en la señal de la imagen.
 
-This library mitigates the "Analog Hole" vulnerability by embedding persistent, invisible identifiers directly into the media signal, ensuring provenance retention even after metadata stripping, format conversion, or analog recapture.
+## 🧩 Algoritmo y Arquitectura
 
-## Abstract
-
-Standard cryptographic manifests (C2PA/JUMBF) provide strong integrity assertions but are fragile against non-destructive transformations (metadata stripping) and analog breaches (screen capture). LumaTrace bridges this gap by injecting a spread-spectrum signal into the blue-chrominance channel, modulated by local perceptual entropy.
-
-The implementation focuses on:
-* **Invisibility:** Leveraging the Human Visual System (HVS) insensitivity to blue-channel noise.
-* **Robustness:** Surviving JPEG compression (Q>50), scaling (>0.5x), and cropping.
-* **Performance:** Optimized O(n) detection using integral image techniques.
-
-## System Architecture
-
-### Embedding Pipeline
-
-The watermarking engine utilizes a deterministic pseudo-random noise generator seeded by a cryptographic hash of the content metadata.
+El motor utiliza un generador de ruido pseudo-aleatorio determinista sembrado por un hash criptográfico de los metadatos.
 
 ```mermaid
 graph LR
@@ -34,91 +20,39 @@ graph LR
     F --> G;
     G --> H[Blue Channel Injection];
     H --> I[Watermarked Asset];
-```
 
-Key Derivation: SHA-256(MasterKey + UserID + ContentID) ensures a deterministic seed.
+Características Clave
+Invisibilidad: Aprovecha la insensibilidad del Sistema Visual Humano (HVS) al ruido en el canal azul.
 
-Signal Generation: A Gaussian distribution (μ=0, σ=1) is generated and tiled.
+Robustez: Sobrevive a compresión JPEG (Q>50), reescalado (>0.5x) y recorte (Cropping).
 
-Psychovisual Masking: Signal gain is adapted pixel-by-pixel based on local texture activity (edge entropy) to prevent visual artifacts in flat regions.
+Rendimiento: Detección optimizada O(n) usando técnicas de imagen integral (FastBitmap).
 
-Detection Strategy
-Detection is performed via Blind Correlation. The detector does not require the original image, only the candidate image and the expected metadata keys.
+📊 Métricas de Rendimiento
+Pruebas realizadas en dataset estándar (Lenna, Kodak) a resolución 1080p.
 
-Folding: The image is folded into a 64x64 accumulator to amplify the periodic signal.
+Escenario de Ataque	Sigma Promedio (σ)	Veredicto	Umbral
+Nativo (Sin Ataque)	37.32	✅ PASS	> 4.0
+Compresión JPEG (Q=70)	36.09	✅ PASS	> 4.0
+Compresión JPEG (Q=50)	34.50	✅ PASS	> 4.0
+Escalado (50%)	16.82	✅ PASS	> 4.0
+Recorte Central (80%)	33.73	✅ PASS	> 4.0
 
-Multi-scale Search: A heuristic search is performed across varying scales (1.0x to 0.5x) to recover from resizing attacks.
-
-Statistical Verdict: The presence of the watermark is confirmed using a Z-score (Sigma) against the null hypothesis.
-
-Performance & Robustness Metrics
-Tests performed on standard test datasets (Lenna, Kodak) at 1080p resolution.
-
-| Transformation Scenario     | Avg. Sigma (σ) | Verdict | Threshold |
-|:----------------------------|:---------------|:--------|:----------|
-| **Native (No Attack)**      | 37.32          | PASS    | > 4.0     |
-| **JPEG Compression (Q=70)** | 36.09          | PASS    | > 4.0     |
-| **JPEG Compression (Q=50)** | 34.50          | PASS    | > 4.0     |
-| **Downscaling (50%)**       | 16.82          | PASS    | > 4.0     |
-| **Central Crop (80%)**      | 33.73          | PASS    | > 4.0     |
-
-Note: A Sigma value > 4.0 implies a false positive probability of less than 1 in 30,000.
-
-Usage
-Prerequisites
-Java Development Kit (JDK) 11 or higher
-
-Maven 3.6+
-
-Command Line Interface (CLI)
-The artifact is packaged as a standalone JAR.
-
-Embedding:
-```bash
-java -jar lumatrace.jar --embed \
---input source.jpg \
---output secured.jpg \
---key <MASTER_KEY>
-```
-
-Detection:
-```bash
-java -jar lumatrace.jar --detect \
---input suspicious.jpg \
---key <MASTER_KEY>
-```
-
-Output:
-```plaintext
-------------------------------------------------
+💻 Uso (CLI)El artefacto se empaqueta como un JAR autónomo ("Fat Jar") listo para usar.Incrustar (Embed)Bashjava -jar lumatrace-core.jar embed --input source.jpg --output secured.jpg
+Detectar (Detect)Bashjava -jar lumatrace-core.jar detect --input suspicious.jpg
+Salida:Plaintext------------------------------------------------
 DETECTION RESULT | Time: 142ms
 ------------------------------------------------
 Confidence (Sigma) : 36.6042
 Detected Scale     : 1.00x
 VERDICT            : PASS
 ------------------------------------------------
-```
+🔧 ConfiguraciónCrea un archivo lumatrace.properties junto al JAR o usa variables de entorno:Properties# lumatrace.properties
+master.key=0xDEADBEEF12345678
+default.user=production-user
+image.jpeg.quality.embed=0.95
 
-Integration with C2PA
-LumaTrace is designed to augment the C2PA Soft Binding assertions. The watermark payload (UUID) should be linked to the manifest via the soft-binding assertion label es.lumatrace.
-
-Example Manifest Structure:
-```JSON
-{
-"label": "es.lumatrace",
-"data": {
-  "alg": "spread-spectrum-v4",
-  "strength": "adaptive",
-  "uid": "7f8e9d1a-..."
-  }
-}
-```
-
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+📦 Integración como LibreríaJavaWatermarkEngine engine = new WatermarkEngine();
+BufferedImage secured = engine.embedWatermark(original, key, "user", "content-id");
 
 Maintained by the LumaTrace Open Source Project.
-
-
-
-
