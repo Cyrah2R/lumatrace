@@ -3,16 +3,18 @@
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-green)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue)
 
-Microservicio RESTful que expone las capacidades de **LumaTrace Core** a través de una API segura y escalable. Diseñado para integrarse en flujos de trabajo de ingesta de medios y sistemas CMS.
+RESTful microservice exposing **LumaTrace Core** capabilities through a secure and scalable API. Designed to integrate into media ingestion workflows and CMS systems.
 
-## 🔌 API Endpoints
+## API Endpoints
 
-### Registrar y Proteger Imagen
-Genera la semilla criptográfica necesaria para proteger una imagen y registra la transacción en base de datos.
+### Register and Protect Image
+
+Generates the cryptographic seed required to protect an image and records the transaction in the database.
 
 **POST** `/api/v1/photos/register`
 
 **Body:**
+
 ```json
 {
   "userId": "user_123",
@@ -20,25 +22,34 @@ Genera la semilla criptográfica necesaria para proteger una imagen y registra l
   "latitude": 41.3851,
   "longitude": 2.1734
 }
+```
 
-Response (200 OK):
+**Response (200 OK):**
+
+```json
 {
   "photoId": "550e8400-e29b-...",
   "watermarkSeed": -2847512206788753832,
   "canonicalHash": "af3cab08..."
 }
+```
 
+## Environment Variables
 
-⚙️ Variables de Entorno
-Para despliegue en producción (Docker/K8s), es necesario configurar estas variables:
+For production deployment (Docker/K8s), configure the following variables:
 
-Variable	Descripción	Ejemplo
-LUMATRACE_MASTER_KEY	Clave maestra secreta (Hex/Long)	0xCAFEBABE...
-SPRING_DATASOURCE_URL	URL de conexión JDBC	jdbc:postgresql://host:5432/db
-SPRING_DATASOURCE_USERNAME	Usuario de BD	postgres
-SPRING_DATASOURCE_PASSWORD	Contraseña de BD	secret
-SERVER_PORT	Puerto interno del contenedor	8081
+| Variable                   | Description                  | Example                        |
+| -------------------------- | ---------------------------- | ------------------------------ |
+| LUMATRACE_MASTER_KEY       | Master secret key (Hex/Long) | 0xCAFEBABE...                  |
+| SPRING_DATASOURCE_URL      | JDBC connection URL          | jdbc:postgresql://host:5432/db |
+| SPRING_DATASOURCE_USERNAME | Database user                | postgres                       |
+| SPRING_DATASOURCE_PASSWORD | Database password            | secret                         |
+| SERVER_PORT                | Internal container port      | 8081                           |
 
-🛠️ Desarrollo Local
-Para arrancar el servicio sin Docker (requiere lumatrace-core instalado y una BD local):
+## Local Development
+
+To start the service without Docker (requires lumatrace-core installed and a local database):
+
+```bash
 mvn spring-boot:run
+```

@@ -1,101 +1,102 @@
-# LumaTrace Core Engine 🛡️
+# LumaTrace Core Engine
 
-![Java](https://img.shields.io/badge/Java-21-orange)
-![Architecture](https://img.shields.io/badge/Architecture-Hexagonal-blue)
-![Performance](https://img.shields.io/badge/Performance-Thread%20Safe-green)
+Standardized implementation of an **Adaptive Spatial Watermarking engine**. Designed to mitigate the "Analog Hole" by embedding persistent, imperceptible identifiers using **Spread-Spectrum modulation** modulated by local image entropy.
 
-**LumaTrace Core** es la implementación de referencia del motor matemático de **Marca de Agua Espacial Adaptativa**. Esta librería mitiga la vulnerabilidad del "Analog Hole" incrustando identificadores persistentes e invisibles directamente en la señal de la imagen utilizando algoritmos de espectro ensanchado (*Spread-Spectrum*).
+---
 
-## 🧩 Algoritmo y Arquitectura
+## Technical Specifications
 
-El motor utiliza un generador de ruido pseudo-aleatorio determinista sembrado por un hash criptográfico de los metadatos y una clave maestra.
+### Architecture
+
+The engine generates a deterministic pseudo-random noise (PRNG) signature seeded by a cryptographic hash of the metadata and a Master Key.
 
 ```mermaid
 graph LR
-    A[Imagen Fuente] --> B{Análisis Entropía};
-    C[Metadatos + Clave] --> D[Key Derivation];
-    D --> E[PRNG Signature 64x64];
-    B --> F[Mapa de Ganancia];
-    E --> G[Modulación Señal];
-    F --> G;
-    G --> H[Inyección Canal Azul];
-    H --> I[Activo Protegido];
+A[Source Image] --> B{Entropy Analysis}
+C[Metadata + Key] --> D[Key Derivation]
+D --> E[PRNG Signature]
+B --> F[Gain Mapping]
+E --> G[Signal Modulation]
+F --> G
+G --> H[Blue Channel Injection]
+H --> I[Protected Asset]
 ```
-    
-Características Clave
-Invisibilidad: Aprovecha la insensibilidad del Sistema Visual Humano (HVS) al ruido en el canal azul y zonas de alta textura.
 
-Robustez: Sobrevive a compresión JPEG (Calidad > 50%), reescalado (>0.5x) y recorte (Cropping).
+### Key Differentiators
 
-Rendimiento V3:
+* **HVS Optimization**: Exploits the Human Visual System's low sensitivity to high-frequency noise in the blue channel.
+* **Resilience**: Survives lossy JPEG compression (Q > 50%), bilinear/bicubic rescaling (>0.5x), and center/asymmetric cropping.
+* **V3 Performance**: Utilizes Java 21 Virtual Threads and Zero-Allocation buffers for high-throughput batch processing.
 
-Java 21 Virtual Threads: Procesamiento batch no bloqueante.
+### Robustness Benchmarks
 
-Zero-Allocation: Uso de buffers ThreadLocal para evitar presión en el Garbage Collector.
+Standardized 1080p dataset tests.
 
-Coarse-to-Fine Search: Detección optimizada mediante búsqueda jerárquica de correlación.
+| Attack Scenario    | Parameter | Avg. Confidence (σ) | Status | Safety Threshold |
+| ------------------ | --------- | ------------------- | ------ | ---------------- |
+| Native (No Attack) | 100%      | 37.32               | PASS   | > 4.0            |
+| JPEG Compression   | Q=90      | 36.09               | PASS   | > 4.0            |
+| JPEG Compression   | Q=70      | 28.50               | PASS   | > 4.0            |
+| Rescaling          | 50%       | 16.82               | PASS   | > 4.0            |
+| Center Crop        | 80%       | 33.73               | PASS   | > 4.0            |
 
-📊 Métricas de Robustez
-Pruebas realizadas en dataset estándar (1080p) usando el Benchmark integrado.
+### CLI Usage
 
-Escenario de Ataque	Sigma Promedio (σ)	Veredicto	Umbral Seguro
-Nativo (Sin Ataque)	37.32	✅ PASS	> 4.0
-Compresión JPEG (Q=90)	36.09	✅ PASS	> 4.0
-Compresión JPEG (Q=70)	28.50	✅ PASS	> 4.0
-Escalado (50%)	16.82	✅ PASS	> 4.0
-Recorte Central (80%)	33.73	✅ PASS	> 4.0
+#### Build
 
-💻 Uso (CLI)
-El artefacto se empaqueta como un JAR autónomo.
+Generate the standalone artifact:
 
-1. Incrustar (Embed)
 ```bash
+mvn clean package
+```
+
+#### Operations
+
+```bash
+# Embed watermark
 java -jar lumatrace-core.jar embed original.jpg protected.jpg
-```
 
-2. Detectar (Detect)
-```bash
+# Detect watermark
 java -jar lumatrace-core.jar detect protected.jpg
 ```
 
-Salida:
-```
-🔍 DETECTION REPORT: protected.jpg
-─────────────────────────────
-Result:     ✅ WATERMARK DETECTED
-Confidence: σ = 36.60
-Scale:      1.00x
-Time:       142 ms
-💪 Strong signal - survives heavy compression
-```
+### Programmatic Integration (Java API)
 
-3. Configuración
-Crea un archivo lumatrace.properties junto al JAR o usa variables de entorno:
-
-# lumatrace.properties
-master.key=0xDEADBEEF12345678
-default.user=production-user
-jpeg.quality=0.95
-verbose=false
-
-📦 Integración Programática (Java API)
-
-// 1. Inicializar
+```java
 WatermarkEngine engine = new WatermarkEngine();
 WatermarkDetector detector = new WatermarkDetector();
 
-// 2. Incrustar
-BufferedImage secured = engine.embedWatermark(
-    originalImage, 
-    0xKEY, 
-    "usuario-id", 
-    "contenido-id"
-);
+// Embedding process
+BufferedImage secured = engine.embedWatermark(img, 0xKEY, "user-id", "content-id");
 
-// 3. Detectar
-var result = detector.detect(secured, 0xKEY, "usuario-id", "contenido-id");
+// Detection process
+var result = detector.detect(secured, 0xKEY, "user-id", "content-id");
 if (result.detected()) {
-    System.out.println("Marca encontrada con confianza: " + result.confidenceZ());
+    // Confidence Z-Score (Sigma)
+    double sigma = result.confidenceZ();
 }
+```
 
-Maintained by the LumaTrace Project.
+### Visual Inspection & Forensic Analysis
+
+Since the signal is imperceptible by design (C2PA compliant), use the following methods for manual verification:
+
+#### Layer Subtraction (Difference Map)
+
+* Overlay protected.jpg on original.jpg in any imaging software.
+* Set blending mode to Difference. Normalize levels or increase exposure to reveal the underlying Gaussian noise pattern.
+
+#### Blue Channel Frequency Analysis
+
+* The signal resides primarily (~85%) in the blue chrominance.
+* Forensic tools will show a structured noise floor in the blue channel that is absent in the source file.
+
+#### Statistical Validation (Sigma Score)
+
+* The engine provides a Z-Score (σ) for every detection.
+
+    * σ = 0.0 → Random noise / No signal
+    * σ ≥ 4.0 → Statistical certainty of watermark presence
+    * σ ≥ 30.0 → High-energy signal, resilient to aggressive post-processing
+
+LumaTrace Project | C2PA Reference Implementation
