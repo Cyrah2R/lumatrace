@@ -13,9 +13,9 @@ public class WatermarkEngine {
     public static final int TILE_SIZE = 64;
 
     // Perceptual Masking Thresholds (JND - Just Noticeable Difference)
-    private static final double MIN_GAIN = 12.0;
-    private static final double MAX_GAIN = 35.0;
-    private static final double ENTROPY_NORMALIZATION = 30.0;
+    private static final double MIN_GAIN = 1.2;
+    private static final double MAX_GAIN = 10.0;
+    private static final double ENTROPY_NORMALIZATION = 65.0;
 
     // Spectral Weighting (Hybrid Low-Frequency/High-Frequency signature)
     // LF provides resilience against resampling; HF ensures statistical uniqueness
@@ -28,9 +28,9 @@ public class WatermarkEngine {
     private static final double LUMA_B = 0.0722;
 
     // Chrominance Injection Vectors (Primary B-Y manifold injection)
-    private static final double VEC_BLUE = 0.85;
-    private static final double VEC_RED = 0.10;
-    private static final double VEC_GREEN = 0.05;
+    private static final double VEC_BLUE = 0.60;
+    private static final double VEC_RED = 0.25;
+    private static final double VEC_GREEN = 0.15;
 
     /**
      * Generates a deterministic high-entropy signature using a hybrid frequency approach.

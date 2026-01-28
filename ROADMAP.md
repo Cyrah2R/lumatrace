@@ -1,9 +1,9 @@
-🗺️ LumaTrace – Project Roadmap
+LumaTrace – Project Roadmap
 
 Este documento define las fases de evolución del proyecto LumaTrace, desde su estado actual hasta una versión estable y extensible.
 No describe el diseño interno (ver docs/design-notes.md), sino qué se construye y en qué orden.
 
-🟢 Estado actual (Baseline)
+Estado actual (Baseline)
 
 ✔️ Proyecto Maven multimódulo funcionando
 ✔️ Build reproducible (mvn clean install)
@@ -16,11 +16,11 @@ lumatrace-cloud: API REST con Spring Boot
 ✔️ Dockerfile funcional
 ✔️ API mínima operativa (registro de fotos)
 
-👉 Este estado se considera: Foundation Complete
+Este estado se considera: Foundation Complete
 
-🟡 Fase 1 – Estabilización del Core (v0.1)
+Fase 1 – Estabilización del Core (v0.1)
 
-🎯 Objetivo: convertir lumatrace-core en una librería sólida y predecible
+Objetivo: convertir lumatrace-core en una librería sólida y predecible
 
 Tareas
 
@@ -48,9 +48,9 @@ Comportamiento estable entre versiones
 
 Base para benchmarking
 
-🟡 Fase 2 – API Cloud coherente (v0.2)
+Fase 2 – API Cloud coherente (v0.2)
 
-🎯 Objetivo: que lumatrace-cloud sea una API clara y extensible
+Objetivo: que lumatrace-cloud sea una API clara y extensible
 
 Tareas
 
@@ -72,9 +72,9 @@ Contratos claros y estables
 
 Base para clientes móviles o web
 
-🟠 Fase 3 – Persistencia y trazabilidad (v0.3)
+Fase 3 – Persistencia y trazabilidad (v0.3)
 
-🎯 Objetivo: trazabilidad mínima pero sólida
+Objetivo: trazabilidad mínima pero sólida
 
 Tareas
 
@@ -94,9 +94,9 @@ Capacidad de reconstrucción de contexto
 
 Base para integración futura con C2PA/JUMBF
 
-🟠 Fase 4 – Robustez algorítmica (v0.4)
+Fase 4 – Robustez algorítmica (v0.4)
 
-🎯 Objetivo: aumentar resiliencia sin romper simplicidad
+Objetivo: aumentar resiliencia sin romper simplicidad
 
 Tareas
 
@@ -116,9 +116,9 @@ Métricas cuantificables
 
 Menor dependencia de condiciones ideales
 
-🔵 Fase 5 – Integración y despliegue (v1.0)
+Fase 5 – Integración y despliegue (v1.0)
 
-🎯 Objetivo: sistema usable de extremo a extremo
+Objetivo: sistema usable de extremo a extremo
 
 Tareas
 
@@ -140,7 +140,7 @@ Documentación clara
 
 Base sólida para evolución futura
 
-🚫 Fuera de alcance (por ahora)
+Fuera de alcance (por ahora)
 
 Explícitamente NO abordado en esta etapa:
 
@@ -154,6 +154,6 @@ Guerra adversarial con IA
 
 Autoridad criptográfica
 
-📌 Nota final
+Nota final
 
 LumaTrace no busca ser “perfecto”, sino útil, honesto y robusto dentro de un modelo de amenazas realista.
