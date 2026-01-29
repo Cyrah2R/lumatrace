@@ -37,6 +37,7 @@ public class RegistrationController {
         PhotoRegistration saved = repository.save(
                 new PhotoRegistration(
                         request.getUserId(),
+                        request.getContentHash(),
                         request.getDeviceModel(),
                         request.getLatitude(),
                         request.getLongitude()
@@ -47,6 +48,7 @@ public class RegistrationController {
                 "lumatrace/1.0",
                 saved.getId(),
                 saved.getUserId(),
+                saved.getContentHash(),
                 saved.getDeviceModel(),
                 saved.getCreatedAt(),
                 saved.getLatitude(),
