@@ -71,6 +71,8 @@ To ensure high-quality content provenance, LumaTrace uses an adaptive spread-spe
 | ![Original](./samples/input.jpg) | ![Protected](./samples/protected_final.jpg) | ![Difference](./docs/screenshots/difference_map.png) |
 | *No watermark signature* | *Encoded with Seed 8049...* | *Spatial signal distribution* |
 
+[Get the latest executable JARs here](https://github.com/Cyrah2R/lumatrace-cloud/releases/latest)
+
 ### Psychovisual Insights
 * **Luma Masking:** The signal is heavily masked in high-texture areas (buildings, cars).
 * **Sky Protection:** Using `MIN_GAIN = 1.2`, we eliminated grain in low-entropy regions (the sky).
