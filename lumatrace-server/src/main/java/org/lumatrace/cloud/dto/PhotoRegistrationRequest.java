@@ -1,21 +1,41 @@
 package org.lumatrace.cloud.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class PhotoRegistrationRequest {
-    @NotBlank
+
+    @NotNull
     private String userId;
 
-    @NotBlank
+    @NotNull
     private String contentHash;
 
+    @NotNull
     private String deviceModel;
-    private Double latitude;
-    private Double longitude;
+
+    private double latitude;
+    private double longitude;
+
+    public PhotoRegistrationRequest() {
+    }
+
+    public PhotoRegistrationRequest(String userId, String contentHash, String deviceModel, double latitude, double longitude) {
+        this.userId = userId;
+        this.contentHash = contentHash;
+        this.deviceModel = deviceModel;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public String getUserId() { return userId; }
     public String getContentHash() { return contentHash; }
     public String getDeviceModel() { return deviceModel; }
-    public Double getLatitude() { return latitude; }
-    public Double getLongitude() { return longitude; }
+    public double getLatitude() { return latitude; }
+    public double getLongitude() { return longitude; }
+
+    public void setUserId(String userId) { this.userId = userId; }
+    public void setContentHash(String contentHash) { this.contentHash = contentHash; }
+    public void setDeviceModel(String deviceModel) { this.deviceModel = deviceModel; }
+    public void setLatitude(double latitude) { this.latitude = latitude; }
+    public void setLongitude(double longitude) { this.longitude = longitude; }
 }

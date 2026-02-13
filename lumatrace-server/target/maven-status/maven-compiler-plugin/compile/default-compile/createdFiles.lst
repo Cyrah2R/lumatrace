@@ -1,0 +1,9 @@
+org\lumatrace\cloud\lumatrace\LumaTraceCanonicalizer.class
+org\lumatrace\cloud\LumatraceCloudApplication.class
+org\lumatrace\cloud\dto\VerificationResponse.class
+org\lumatrace\cloud\repository\PhotoRepository.class
+org\lumatrace\cloud\lumatrace\LumaTraceManifest.class
+org\lumatrace\cloud\controller\RegistrationController.class
+org\lumatrace\cloud\dto\PhotoRegistrationResponse.class
+org\lumatrace\cloud\dto\PhotoRegistrationRequest.class
+org\lumatrace\cloud\model\PhotoRegistration.class

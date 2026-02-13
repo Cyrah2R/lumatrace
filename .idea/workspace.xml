@@ -5,39 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce157f8d-38a3-46fe-8a35-feafea970fbc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/VerificationResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/lumatrace/cloud/LumatraceCloudApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DiffGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DiffGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tools/DiffGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/LumatraceCloudApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/LumatraceCloudApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/controller/RegistrationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/lumatrace/LumaTraceCanonicalizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/lumatrace/LumaTraceCanonicalizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/lumatrace/LumaTraceManifest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/lumatrace/LumaTraceManifest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/model/PhotoRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/model/PhotoRegistration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/repository/PhotoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/repository/PhotoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/cli/LumaTraceCLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/cli/LumaTraceCLI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/KeyDerivation.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/KeyDerivation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/RobustnessBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/RobustnessBenchmark.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/WatermarkDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/WatermarkDetector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/WatermarkEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/WatermarkEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lumatrace-core/src/test/java/org/lumatrace/core/WatermarkCoreTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lumatrace-server/src/test/java/org/lumatrace/cloud/RegistrationControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lumatrace-server/src/test/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/test/java/org/lumatrace/core/CoreStressTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/test/java/org/lumatrace/core/EndToEndTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/test/java/org/lumatrace/core/KeyDerivationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationRequest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,26 +58,87 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="399WgjzN5E19Cxtg1OAce5KaoXF" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.RegistrationControllerTest.executor": "Run",
+    "JUnit.RegistrationControllerTest.testVerificationWithInvalidImage.executor": "Run",
+    "JUnit.WatermarkCoreTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\EM2025007610\Desktop\WORK\Proyecto_David\lumatrace-cloud\src\test\java\tools" />
     </key>
+  </component>
+  <component name="RunManager" selected="JUnit.RegistrationControllerTest">
+    <configuration name="RegistrationControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lumatrace-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.lumatrace.cloud.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.lumatrace.cloud" />
+      <option name="MAIN_CLASS_NAME" value="org.lumatrace.cloud.RegistrationControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RegistrationControllerTest.testVerificationWithInvalidImage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lumatrace-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.lumatrace.cloud.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.lumatrace.cloud" />
+      <option name="MAIN_CLASS_NAME" value="org.lumatrace.cloud.RegistrationControllerTest" />
+      <option name="METHOD_NAME" value="testVerificationWithInvalidImage" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WatermarkCoreTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lumatrace-core" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.lumatrace.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.lumatrace.core" />
+      <option name="MAIN_CLASS_NAME" value="org.lumatrace.core.WatermarkCoreTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.RegistrationControllerTest" />
+        <item itemvalue="JUnit.RegistrationControllerTest.testVerificationWithInvalidImage" />
+        <item itemvalue="JUnit.WatermarkCoreTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
