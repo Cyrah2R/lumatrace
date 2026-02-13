@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce157f8d-38a3-46fe-8a35-feafea970fbc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lumatrace-core/src/test/java/org/lumatrace/core/WatermarkCoreTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lumatrace-server/src/test/java/org/lumatrace/cloud/RegistrationControllerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lumatrace-server/src/test/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/test/java/org/lumatrace/core/CoreStressTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/test/java/org/lumatrace/core/EndToEndTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/test/java/org/lumatrace/core/KeyDerivationTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
