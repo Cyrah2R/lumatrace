@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce157f8d-38a3-46fe-8a35-feafea970fbc" name="Changes" comment="Update" />
+    <list default="true" id="ce157f8d-38a3-46fe-8a35-feafea970fbc" name="Changes" comment="Update">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,6 +75,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\EM2025007610\Desktop\WORK\Proyecto_David\lumatrace-cloud" />
       <recent name="C:\Users\EM2025007610\Desktop\WORK\Proyecto_David\lumatrace-cloud\src\test\java\tools" />
     </key>
   </component>

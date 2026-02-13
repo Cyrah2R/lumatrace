@@ -101,4 +101,8 @@ The asset was subjected to aggressive degradation (JPEG compression, downsamplin
 The master key and database credentials are managed via the .env file, which is injected into the containers at runtime.
 Never hardcode real keys in the source code.
 
+## License
+This project is licensed under the **GNU General Public License v3.0**.
+This ensures that the software remains free and open, and any derivative works must also be open-sourced under the same terms.
+
 © 2026 LumaTrace Project.**
