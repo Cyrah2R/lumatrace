@@ -4,7 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
+/*
+ * Copyright (c) 2026 David Rivera Ruz.
+ * Licensed under the GNU General Public License v3.0.
+ *
  * Utility for cryptographically secure seed generation.
  * Ensures consistent seed derivation across Java and Android.
  */

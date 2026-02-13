@@ -2,7 +2,10 @@ package org.lumatrace.core;
 
 import java.util.Random;
 
-/**
+/*
+ * Copyright (c) 2026 David Rivera Ruz.
+ * Licensed under the GNU General Public License v3.0.
+ *
  * Enterprise Grade Watermark Engine.
  * Platform Agnostic: Works on JVM (Cloud) and Dalvik/ART (Android).
  * NO external dependencies on AWT or Android SDK.

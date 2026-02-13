@@ -14,7 +14,10 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
+/*
+ * Copyright (c) 2026 David Rivera Ruz.
+ * Licensed under the GNU General Public License v3.0.
+ *
  * LumaTrace V3 Enterprise CLI
  * Updated to use the new Platform-Agnostic WatermarkEngine & Detector.
  */

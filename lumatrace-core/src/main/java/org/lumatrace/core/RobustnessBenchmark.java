@@ -13,7 +13,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-/**
+/*
+ * Copyright (c) 2026 David Rivera Ruz.
+ * Licensed under the GNU General Public License v3.0.
+ *
  * Forensic Robustness Validation Suite.
  * Automated evaluation of signal resilience against common signal processing
  * Attack Vectors: DCT compression, spatial interpolation, and geometric clipping.

@@ -1,6 +1,9 @@
 package org.lumatrace.core;
 
-/**
+/*
+ * Copyright (c) 2026 David Rivera Ruz.
+ * Licensed under the GNU General Public License v3.0.
+ *
  * High-Performance Forensic Signal Detector.
  * Platform Agnostic: Works on Cloud (JVM) and Mobile (Android).
  * Implements a dual-phase spatial synchronization engine using 2D cross-correlation.
