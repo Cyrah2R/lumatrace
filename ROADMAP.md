@@ -1,159 +1,78 @@
-LumaTrace – Project Roadmap
-
-Este documento define las fases de evolución del proyecto LumaTrace, desde su estado actual hasta una versión estable y extensible.
-No describe el diseño interno (ver docs/design-notes.md), sino qué se construye y en qué orden.
-
-Estado actual (Baseline)
-
-✔️ Proyecto Maven multimódulo funcionando
-✔️ Build reproducible (mvn clean install)
-✔️ Separación clara de responsabilidades:
-
-lumatrace-core: motor algorítmico puro
-
-lumatrace-cloud: API REST con Spring Boot
-✔️ CI básico en GitHub Actions
-✔️ Dockerfile funcional
-✔️ API mínima operativa (registro de fotos)
-
-Este estado se considera: Foundation Complete
-
-Fase 1 – Estabilización del Core (v0.1)
-
-Objetivo: convertir lumatrace-core en una librería sólida y predecible
-
-Tareas
-
-Tests unitarios deterministas del algoritmo
-
-Validación estadística reproducible (seed fija)
-
-Separar claramente:
-
-generación de firma
-
-inserción
-
-detección
-
-Documentar API pública del Core
-
-Congelar interfaces públicas (@PublicAPI)
-
-Resultado esperado
-
-Core usable como librería standalone
-
-Comportamiento estable entre versiones
-
-Base para benchmarking
-
-Fase 2 – API Cloud coherente (v0.2)
-
-Objetivo: que lumatrace-cloud sea una API clara y extensible
-
-Tareas
-
-DTOs explícitos (no exponer entidades JPA)
-
-Manejo de errores uniforme (Problem Details / RFC 7807)
-
-Validación exhaustiva de inputs
-
-Healthcheck (/actuator/health)
-
-Versionado de API (/api/v1)
-
-Resultado esperado
-
-API lista para integración externa
-
-Contratos claros y estables
-
-Base para clientes móviles o web
-
-Fase 3 – Persistencia y trazabilidad (v0.3)
-
-Objetivo: trazabilidad mínima pero sólida
-
-Tareas
-
-Modelo de dominio definitivo (Photo, Registration, Provenance)
-
-Índices y constraints en BD
-
-Hash canónico reproducible
-
-Auditoría básica (timestamps, source)
-
-Resultado esperado
-
-Registro confiable de eventos
-
-Capacidad de reconstrucción de contexto
-
-Base para integración futura con C2PA/JUMBF
-
-Fase 4 – Robustez algorítmica (v0.4)
-
-Objetivo: aumentar resiliencia sin romper simplicidad
-
-Tareas
-
-Detección multi-escala real
-
-Tolerancia a rotación leve
-
-Métricas automáticas de confianza
-
-Dataset interno de pruebas
-
-Resultado esperado
-
-Detección más estable en escenarios reales
-
-Métricas cuantificables
-
-Menor dependencia de condiciones ideales
-
-Fase 5 – Integración y despliegue (v1.0)
-
-Objetivo: sistema usable de extremo a extremo
-
-Tareas
-
-Docker Compose (API + DB)
-
-Variables de entorno documentadas
-
-Hardening básico (secrets, profiles)
-
-README final coherente con la realidad
-
-Tag v1.0.0
-
-Resultado esperado
-
-Proyecto desplegable en local y cloud
-
-Documentación clara
-
-Base sólida para evolución futura
-
-Fuera de alcance (por ahora)
-
-Explícitamente NO abordado en esta etapa:
-
-DRM
-
-Ofuscación agresiva
-
-Eliminación activa de watermark
-
-Guerra adversarial con IA
-
-Autoridad criptográfica
-
-Nota final
-
-LumaTrace no busca ser “perfecto”, sino útil, honesto y robusto dentro de un modelo de amenazas realista.
+# LumaTrace – Project Roadmap
+
+This document defines the evolution phases of the LumaTrace project, from its current state to a stable and extensible version. It focuses on *what* is being built and the order of execution.
+
+## Current Status (Baseline)
+✔️ Functional multi-module Maven project.
+✔️ Reproducible build (`mvn clean install`).
+✔️ Clear separation of concerns:
+- `lumatrace-core`: Pure algorithmic engine.
+- `lumatrace-cloud`: Spring Boot REST API.
+  ✔️ Basic CI via GitHub Actions.
+  ✔️ Functional Dockerfile.
+  ✔️ Minimum Viable API (Photo registration).
+
+**Status: Foundation Complete**
+
+---
+
+## Phase 1 – Core Stabilization (v0.1)
+**Goal:** Turn `lumatrace-core` into a solid, predictable library.
+- **Tasks:**
+    - Deterministic unit testing for the algorithm.
+    - Reproducible statistical validation (fixed seed).
+    - Clear decoupling: Signature Generation vs. Insertion vs. Detection.
+    - Document public Core API.
+    - Freeze public interfaces (`@PublicAPI`).
+- **Expected Outcome:** Core usable as a standalone library with stable behavior across versions.
+
+## Phase 2 – Coherent Cloud API (v0.2)
+**Goal:** Make `lumatrace-cloud` an extensible and clear API.
+- **Tasks:**
+    - Explicit DTOs (decoupling from JPA entities).
+    - Uniform error handling (Problem Details / RFC 7807).
+    - Exhaustive input validation.
+    - Healthcheck implementation (`/actuator/health`).
+    - API Versioning (`/api/v1`).
+- **Expected Outcome:** API ready for external integration with clear contracts for mobile/web clients.
+
+## Phase 3 – Persistence & Traceability (v0.3)
+**Goal:** Establish solid minimum traceability.
+- **Tasks:**
+    - Final domain model (Photo, Registration, Provenance).
+    - Database indexes and constraints.
+    - Reproducible canonical hashing.
+    - Basic auditing (timestamps, source tracking).
+- **Expected Outcome:** Reliable event logging and context reconstruction capabilities (C2PA/JUMBF readiness).
+
+## Phase 4 – Algorithmic Robustness (v0.4)
+**Goal:** Increase resilience without sacrificing simplicity.
+- **Tasks:**
+    - Real multi-scale detection.
+    - Tolerance for slight rotation.
+    - Automated confidence metrics.
+    - Internal testing dataset.
+- **Expected Outcome:** Stable detection in real-world scenarios with quantifiable metrics.
+
+## Phase 5 – Integration & Deployment (v1.0)
+**Goal:** End-to-end usable system.
+- **Tasks:**
+    - Docker Compose orchestration (API + DB).
+    - Documented environment variables.
+    - Basic security hardening (secrets, profiles).
+    - Final README alignment.
+    - Tag `v1.0.0`.
+- **Expected Outcome:** Deployable project in local and cloud environments with professional documentation.
+
+---
+
+## Out of Scope (Current Focus)
+The following are explicitly NOT addressed in this stage:
+- DRM (Digital Rights Management).
+- Aggressive obfuscation.
+- Active watermark removal.
+- AI adversarial warfare.
+- Cryptographic authority management.
+
+## Final Note
+LumaTrace does not aim for "perfection," but for utility, honesty, and robustness within a realistic threat model.
