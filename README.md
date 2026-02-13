@@ -1,4 +1,4 @@
-**# LumaTrace Enterprise Framework
+### LumaTrace Enterprise Framework
 
 ![Build Status](https://img.shields.io/github/actions/workflow/status/tusuario/lumatrace/maven.yml?branch=main)
 ![Java](https://img.shields.io/badge/Java-21-orange)
