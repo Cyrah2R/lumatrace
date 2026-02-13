@@ -6,13 +6,13 @@
 
     <parent>
         <groupId>org.lumatrace</groupId>
-        <artifactId>lumatrace</artifactId>
+        <artifactId>lumatrace-cloud</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>lumatrace-cloud</artifactId>
+    <artifactId>lumatrace-server</artifactId>
     <packaging>jar</packaging>
-    <name>LumaTrace Cloud API</name>
+    <name>lumatrace-server</name>
 
     <dependencies>
         <dependency>

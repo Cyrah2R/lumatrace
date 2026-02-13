@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.lumatrace</groupId>
-    <artifactId>lumatrace</artifactId>
+    <artifactId>lumatrace-cloud</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>lumatrace-core</module>
-        <module>lumatrace-cloud</module>
+        <module>lumatrace-server</module>
     </modules>
 
     <properties>

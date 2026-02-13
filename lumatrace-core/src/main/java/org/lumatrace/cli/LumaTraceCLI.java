@@ -16,13 +16,13 @@ import java.util.logging.Logger;
 
 /**
  * LumaTrace V3 Enterprise CLI
- * Reference implementation for automated content integrity and forensic watermarking.
+ * Updated to use the new Platform-Agnostic WatermarkEngine & Detector.
  */
 public class LumaTraceCLI {
 
     private static final Logger LOGGER = Logger.getLogger(LumaTraceCLI.class.getName());
     private static final String CONFIG_FILE = "lumatrace.properties";
-    private static final String VERSION = "3.0.0-RELEASE";
+    private static final String VERSION = "3.1.0-ENTERPRISE";
 
     private static long MASTER_KEY;
     private static String DEFAULT_USER;
@@ -41,24 +41,17 @@ public class LumaTraceCLI {
                 printUsage();
                 System.exit(1);
             }
-
             int exitCode = switch (args[0].toLowerCase()) {
                 case "embed", "-e" -> processEmbed(args);
                 case "detect", "-d" -> processDetect(args);
-                case "benchmark", "-b" -> processBenchmark(args);
                 case "batch" -> processBatch(args);
                 case "keygen", "-g" -> generateKey();
                 case "version", "-v" -> { showVersion(); yield 0; }
                 default -> { printUsage(); yield 1; }
             };
-
             System.exit(exitCode);
-
-        } catch (IllegalArgumentException e) {
-            System.err.println("[CLI_ERROR] Parameter validation failed: " + e.getMessage());
-            System.exit(2);
         } catch (Exception e) {
-            System.err.println("[FATAL_EXCEPTION] Runtime execution failure: " + e.getMessage());
+            System.err.println("[FATAL] " + e.getMessage());
             if (VERBOSE) e.printStackTrace();
             System.exit(3);
         }
@@ -66,30 +59,32 @@ public class LumaTraceCLI {
 
     private static int processEmbed(String[] args) throws Exception {
         validateArgs(args, 2, "embed <input> [output]");
-
         File input = validateFile(args[1], true);
-        File output = args.length > 2
-                ? validateFile(args[2], false)
-                : generateOutputFile(input);
+        File output = args.length > 2 ? validateFile(args[2], false) : generateOutputFile(input);
 
-        BufferedImage src = null;
-        try {
-            src = ImageIO.read(input);
-            if (src == null) throw new IllegalArgumentException("Codec failure: Unsupported image format");
+        BufferedImage src = ImageIO.read(input);
+        if (src == null) throw new IllegalArgumentException("Unsupported image format");
 
-            WatermarkEngine engine = new WatermarkEngine();
-            long start = System.nanoTime();
-            BufferedImage result = engine.embedWatermark(src, MASTER_KEY, DEFAULT_USER, DEFAULT_CONTENT);
-            long durationMs = (System.nanoTime() - start) / 1_000_000;
+        WatermarkEngine engine = new WatermarkEngine();
+        long start = System.nanoTime();
 
-            saveJpeg(result, output, JPEG_QUALITY);
+        // --- ADAPTACIÓN (AWT -> Raw Int) ---
+        int w = src.getWidth();
+        int h = src.getHeight();
+        int[] rawPixels = src.getRGB(0, 0, w, h, null, 0, w);
 
-            printEmbedTelemetry(input, output, durationMs, src.getWidth(), src.getHeight());
-            return 0;
+        // Procesar (Pure Math)
+        int[] processedPixels = engine.embedWatermark(rawPixels, w, h, MASTER_KEY, DEFAULT_USER, DEFAULT_CONTENT);
 
-        } finally {
-            if (src != null) src.flush();
-        }
+        // Reconstruir (Raw Int -> AWT)
+        BufferedImage result = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        result.setRGB(0, 0, w, h, processedPixels, 0, w);
+        // ------------------------------------
+
+        long durationMs = (System.nanoTime() - start) / 1_000_000;
+        saveJpeg(result, output, JPEG_QUALITY);
+        printEmbedTelemetry(input, output, durationMs, src.getWidth(), src.getHeight());
+        return 0;
     }
 
     private static int processDetect(String[] args) throws Exception {
@@ -103,44 +98,38 @@ public class LumaTraceCLI {
 
             WatermarkDetector detector = new WatermarkDetector();
             long start = System.nanoTime();
-            WatermarkDetector.DetectionResult result = detector.detect(img, MASTER_KEY, DEFAULT_USER, DEFAULT_CONTENT);
+
+            // --- ADAPTACIÓN (AWT -> Raw Int) ---
+            int w = img.getWidth();
+            int h = img.getHeight();
+            int[] rawPixels = img.getRGB(0, 0, w, h, null, 0, w);
+
+            // Llamada al detector puro (Devuelve DetectionReport)
+            DetectionReport report = detector.detect(rawPixels, w, h, MASTER_KEY, DEFAULT_USER, DEFAULT_CONTENT);
+            // -----------------------------------
+
             long durationMs = (System.nanoTime() - start) / 1_000_000;
 
-            printDetectionReport(result, input, durationMs);
-            return result.detected() ? 0 : 4;
+            printDetectionReport(report, input, durationMs);
+
+            // Usamos Sigma > 4.0 como criterio de éxito
+            return (report.confidenceSigma() > 4.0) ? 0 : 4;
 
         } finally {
             if (img != null) img.flush();
         }
     }
 
-    private static int processBenchmark(String[] args) {
-        String path = args.length > 1 ? args[1] : "test.jpg";
-        File file = validateFile(path, true);
-
-        try {
-            new RobustnessBenchmark().runSuite(file, MASTER_KEY);
-            return 0;
-        } catch (Exception e) {
-            System.err.println("[BENCHMARK_FATAL] Validation suite failed: " + e.getMessage());
-            return 3;
-        }
-    }
-
     private static int processBatch(String[] args) {
         validateArgs(args, 2, "batch <input-dir> [output-dir]");
-
         File inDir = validateDirectory(args[1]);
         File outDir = args.length > 2 ? new File(args[2]) : new File(inDir, "output_protected");
-
-        if (!outDir.exists() && !outDir.mkdirs()) {
-            throw new IllegalArgumentException("PERM_ERROR: Cannot initialize output directory: " + outDir);
-        }
+        if (!outDir.exists() && !outDir.mkdirs()) return 1;
 
         File[] files = inDir.listFiles((d, n) -> n.toLowerCase().matches(".*\\.(jpg|jpeg|png)$"));
         if (files == null || files.length == 0) return 1;
 
-        System.out.printf("TELEMETRY: Initializing parallel batch for %d units...\n", files.length);
+        System.out.printf("TELEMETRY: Initializing batch for %d units...\n", files.length);
 
         try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
             for (File file : files) {
@@ -149,31 +138,28 @@ public class LumaTraceCLI {
                         BufferedImage src = ImageIO.read(file);
                         if (src != null) {
                             WatermarkEngine engine = new WatermarkEngine();
-                            BufferedImage res = engine.embedWatermark(src, MASTER_KEY, DEFAULT_USER, DEFAULT_CONTENT);
+                            int w = src.getWidth();
+                            int h = src.getHeight();
+
+                            int[] raw = src.getRGB(0, 0, w, h, null, 0, w);
+                            int[] outPixels = engine.embedWatermark(raw, w, h, MASTER_KEY, DEFAULT_USER, DEFAULT_CONTENT);
+
+                            BufferedImage res = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+                            res.setRGB(0, 0, w, h, outPixels, 0, w);
+
                             saveJpeg(res, new File(outDir, "PROT_" + file.getName()), JPEG_QUALITY);
                             System.out.println("UNIT_COMPLETE: " + file.getName());
-                            src.flush();
                         }
                     } catch (Exception e) {
-                        System.err.println("UNIT_FAILED: " + file.getName() + " -> " + e.getMessage());
+                        System.err.println("UNIT_FAILED: " + file.getName());
                     }
                 });
             }
         }
-
         return 0;
     }
 
-    private static int generateKey() {
-        SecureRandom rnd = new SecureRandom();
-        long key = rnd.nextLong();
-        System.out.println("--- KEY_GENERATION_REPORT ---");
-        System.out.printf("Timestamp: %d\n", System.currentTimeMillis());
-        System.out.printf("Decimal:   %d\n", key);
-        System.out.printf("Hex:       0x%X\n", key);
-        System.out.println("-----------------------------");
-        return 0;
-    }
+    // --- Helpers Utilitarios ---
 
     private static void saveJpeg(BufferedImage img, File file, float quality) throws Exception {
         Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpeg");
@@ -184,7 +170,6 @@ public class LumaTraceCLI {
             ImageWriteParam param = writer.getDefaultWriteParam();
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
             param.setCompressionQuality(quality);
-
             try (FileImageOutputStream out = new FileImageOutputStream(file)) {
                 writer.setOutput(out);
                 writer.write(null, new IIOImage(img, null, null), param);
@@ -194,88 +179,51 @@ public class LumaTraceCLI {
         }
     }
 
+    private static int generateKey() {
+        SecureRandom rnd = new SecureRandom();
+        long key = rnd.nextLong();
+        System.out.println("KEY: " + key);
+        return 0;
+    }
+
     private static void initializeConfig() {
         Properties props = new Properties();
-        File configFile = new File(CONFIG_FILE);
-
-        if (configFile.exists()) {
-            try (InputStream is = new FileInputStream(configFile)) {
-                props.load(is);
-            } catch (Exception ignored) {}
-        }
+        try (InputStream is = new FileInputStream(new File(CONFIG_FILE))) { props.load(is); } catch (Exception ignored) {}
 
         String envKey = System.getenv("LUMATRACE_MASTER_KEY");
-        if (envKey != null) props.setProperty("master.key", envKey);
+        String keyStr = envKey != null ? envKey : props.getProperty("master.key", "123456789");
 
-        String keyStr = props.getProperty("master.key", "123456789");
-        MASTER_KEY = keyStr.startsWith("0x") ? Long.parseUnsignedLong(keyStr.substring(2), 16) : Long.parseLong(keyStr);
+        try {
+            MASTER_KEY = Long.parseLong(keyStr);
+        } catch (NumberFormatException e) {
+            LOGGER.warning("INVALID KEY FORMAT. Using Default.");
+            MASTER_KEY = 123456789L;
+        }
+
         DEFAULT_USER = props.getProperty("default.user", "system-auth");
         DEFAULT_CONTENT = props.getProperty("default.content", "payload-v1");
         JPEG_QUALITY = Float.parseFloat(props.getProperty("jpeg.quality", "0.95"));
         VERBOSE = Boolean.parseBoolean(props.getProperty("verbose", "false"));
     }
 
-    private static void setupLogging() {
-        if (!VERBOSE) {
-            Logger.getLogger("").setLevel(Level.SEVERE);
-            LOGGER.setLevel(Level.SEVERE);
-        }
-    }
+    private static void setupLogging() { if (!VERBOSE) LOGGER.setLevel(Level.SEVERE); }
+    private static void printUsage() { System.out.println("LumaTrace Enterprise CLI v" + VERSION + "\nUsage: embed, detect, batch, keygen"); }
+    private static File validateFile(String p, boolean e) { File f = new File(p); if(e && !f.exists()) throw new IllegalArgumentException("File not found: " + p); return f; }
+    private static File validateDirectory(String p) { File f = new File(p); if(!f.isDirectory()) throw new IllegalArgumentException("Not a dir: " + p); return f; }
+    private static File generateOutputFile(File i) { return new File(i.getParent(), "PROT_" + i.getName()); }
+    private static void printEmbedTelemetry(File i, File o, long ms, int w, int h) { System.out.printf("[METRICS] %s -> %s (%d ms)\n", i.getName(), o.getName(), ms); }
+    private static void showVersion() { System.out.println(VERSION); }
+    private static void validateArgs(String[] a, int l, String u) { if(a.length < l) throw new IllegalArgumentException(u); }
 
-    private static File validateFile(String path, boolean mustExist) {
-        File file = new File(path);
-        if (mustExist && (!file.exists() || !file.canRead())) {
-            throw new IllegalArgumentException("IO_DENIED: Asset not accessible at " + path);
-        }
-        return file;
-    }
-
-    private static File validateDirectory(String path) {
-        File dir = new File(path);
-        if (!dir.exists() || !dir.isDirectory()) throw new IllegalArgumentException("PATH_INVALID: " + path);
-        return dir;
-    }
-
-    private static void validateArgs(String[] args, int minLength, String usage) {
-        if (args.length < minLength) throw new IllegalArgumentException("SYNTAX: lumatrace " + usage);
-    }
-
-    private static File generateOutputFile(File input) {
-        return new File(input.getParent(), "PROT_" + input.getName());
-    }
-
-    private static void printUsage() {
-        System.out.println("LumaTrace CLI System [v" + VERSION + "]");
-        System.out.println("Architecture: Adaptive Spread-Spectrum / Multi-threaded Batch");
-        System.out.println("\nCommands:");
-        System.out.println("  embed <in> [out]     Signal injection");
-        System.out.println("  detect <in>          Signal extraction & validation");
-        System.out.println("  benchmark <in>       Forensic resilience suite");
-        System.out.println("  batch <dir>          High-throughput processing");
-        System.out.println("  keygen               Cryptographic seed derivation");
-    }
-
-    private static void printEmbedTelemetry(File in, File out, long ms, int w, int h) {
-        double mp = (w * h) / 1_000_000.0;
-        System.out.println("\n[EMBED_METRICS]");
-        System.out.printf("Asset:      %s [%.2f MPixels]\n", in.getName(), mp);
-        System.out.printf("Result:     %s\n", out.getName());
-        System.out.printf("Latency:    %d ms\n", ms);
-        System.out.printf("Net_Speed:  %.2f MP/s\n", mp / (ms / 1000.0));
-    }
-
-    private static void printDetectionReport(WatermarkDetector.DetectionResult res, File in, long ms) {
+    // CORREGIDO: Usamos DetectionReport
+    private static void printDetectionReport(DetectionReport report, File in, long ms) {
+        boolean detected = report.confidenceSigma() > 4.0;
         System.out.println("\n--- FORENSIC_ANALYSIS_REPORT ---");
         System.out.printf("Target:     %s\n", in.getName());
-        System.out.printf("Signal:     %s\n", res.detected() ? "VALIDATED" : "NOT_DETECTED");
-        System.out.printf("Z_Score:    σ = %.4f\n", res.confidenceZ());
-        System.out.printf("Scale_Est:  %.2fx\n", res.detectedScale());
+        System.out.printf("Signal:     %s\n", detected ? "VALIDATED" : "NOT_DETECTED");
+        System.out.printf("Z_Score:    σ = %.4f\n", report.confidenceSigma());
+        System.out.printf("Scale_Est:  %.2fx\n", report.estimatedScale());
         System.out.printf("Analysis:   %d ms\n", ms);
         System.out.println("--------------------------------");
-    }
-
-    private static void showVersion() {
-        System.out.println("LumaTrace Core V" + VERSION);
-        System.out.println("Environment: Java " + System.getProperty("java.version"));
     }
 }

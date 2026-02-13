@@ -17,6 +17,7 @@ import java.io.IOException;
  * Forensic Robustness Validation Suite.
  * Automated evaluation of signal resilience against common signal processing
  * Attack Vectors: DCT compression, spatial interpolation, and geometric clipping.
+ * UPDATED: Uses raw pixel arrays to communicate with the Platform-Agnostic Core.
  */
 public class RobustnessBenchmark {
 
@@ -26,7 +27,7 @@ public class RobustnessBenchmark {
 
     /**
      * Executes a comprehensive robustness audit on a target asset.
-     * * @param sourceFile The master asset for signal injection.
+     * @param sourceFile The master asset for signal injection.
      * @param masterKey  The 64-bit root security key.
      */
     public void runSuite(File sourceFile, long masterKey) {
@@ -37,7 +38,19 @@ public class RobustnessBenchmark {
 
             WatermarkEngine engine = new WatermarkEngine();
             System.out.println("[PROC_EMBED] Generating reference watermarked asset...");
-            BufferedImage watermarked = engine.embedWatermark(original, masterKey, BENCHMARK_SESSION_UID, TEST_PAYLOAD);
+
+            // --- ADAPTACIÓN (BufferedImage -> int[]) ---
+            int w = original.getWidth();
+            int h = original.getHeight();
+            int[] rawPixels = original.getRGB(0, 0, w, h, null, 0, w);
+
+            // Inyección (Matemática Pura)
+            int[] markedPixels = engine.embedWatermark(rawPixels, w, h, masterKey, BENCHMARK_SESSION_UID, TEST_PAYLOAD);
+
+            // Reconstrucción (int[] -> BufferedImage)
+            BufferedImage watermarked = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+            watermarked.setRGB(0, 0, w, h, markedPixels, 0, w);
+            // -------------------------------------------
 
             System.out.println("\n--- FORENSIC ROBUSTNESS AUDIT REPORT ---");
             System.out.printf("%-20s | %-12s | %-12s | %-10s%n", "VECTOR", "PARAMETERS", "STAT_SIGMA", "VERDICT");
@@ -63,6 +76,7 @@ public class RobustnessBenchmark {
 
         } catch (Exception e) {
             System.err.println("[CRITICAL_BENCHMARK_FAILURE] Audit aborted: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -110,10 +124,17 @@ public class RobustnessBenchmark {
     }
 
     private void evaluateVector(String vector, String param, BufferedImage img, long key, WatermarkDetector detector) {
-        WatermarkDetector.DetectionResult res = detector.detect(img, key, BENCHMARK_SESSION_UID, TEST_PAYLOAD);
-        double sigma = res.confidenceZ();
+        // --- ADAPTACIÓN (BufferedImage -> int[]) ---
+        int w = img.getWidth();
+        int h = img.getHeight();
+        int[] rawPixels = img.getRGB(0, 0, w, h, null, 0, w);
 
-        // Status determination based on empirical Z-score thresholds
+        DetectionReport report = detector.detect(rawPixels, w, h, key, BENCHMARK_SESSION_UID, TEST_PAYLOAD);
+
+        // Obtenemos Sigma del reporte
+        double sigma = report.confidenceSigma();
+
+        // Status determination based on empirical Sigma thresholds
         String verdict = (sigma >= SIGMA_CONFIDENCE_THRESHOLD) ? "VERIFIED" : (sigma > 2.5 ? "MARGINAL" : "FAILED");
 
         System.out.printf("%-20s | %-12s | %-12.4f | %-10s%n", vector, param, sigma, verdict);

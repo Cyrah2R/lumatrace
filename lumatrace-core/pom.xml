@@ -6,13 +6,13 @@
 
     <parent>
         <groupId>org.lumatrace</groupId>
-        <artifactId>lumatrace</artifactId>
+        <artifactId>lumatrace-cloud</artifactId>
         <version>1.0.0</version>
     </parent>
 
     <artifactId>lumatrace-core</artifactId>
     <packaging>jar</packaging>
-    <name>LumaTrace Core</name>
+    <name>lumatrace-core</name>
     <description>Adaptive Spatial Watermarking &amp; Detection Engine</description>
 
     <properties>

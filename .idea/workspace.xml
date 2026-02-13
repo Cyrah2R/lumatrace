@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ce157f8d-38a3-46fe-8a35-feafea970fbc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/VerificationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/lumatrace/cloud/LumatraceCloudApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DiffGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DiffGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tools/DiffGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/LumatraceCloudApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/LumatraceCloudApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/controller/RegistrationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/dto/PhotoRegistrationResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/lumatrace/LumaTraceCanonicalizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/lumatrace/LumaTraceCanonicalizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/lumatrace/LumaTraceManifest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/lumatrace/LumaTraceManifest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/model/PhotoRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/model/PhotoRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/java/org/lumatrace/cloud/repository/PhotoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/java/org/lumatrace/cloud/repository/PhotoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-cloud/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-server/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/cli/LumaTraceCLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/cli/LumaTraceCLI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/KeyDerivation.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/KeyDerivation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/RobustnessBenchmark.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/RobustnessBenchmark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/WatermarkDetector.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/WatermarkDetector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/WatermarkEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/lumatrace-core/src/main/java/org/lumatrace/core/WatermarkEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Cyrah2R&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Cyrah2R/lumatrace.git&quot;,
+    &quot;accountId&quot;: &quot;8a50b70f-deef-42d1-bcab-c04714d19102&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="399WgjzN5E19Cxtg1OAce5KaoXF" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\EM2025007610\Desktop\WORK\Proyecto_David\lumatrace-cloud\src\test\java\tools" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ce157f8d-38a3-46fe-8a35-feafea970fbc" name="Changes" comment="" />
+      <created>1770108880352</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1770108880352</updated>
+    </task>
+    <servers />
+  </component>
+</project>

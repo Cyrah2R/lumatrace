@@ -7,6 +7,7 @@ import java.util.UUID;
  * Certificate response containing the generated seed and manifest hash.
  */
 public class PhotoRegistrationResponse {
+
     private final UUID photoId;
     private final LocalDateTime createdAt;
     private final String canonicalJson;

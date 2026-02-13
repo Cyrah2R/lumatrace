@@ -1,4 +1,4 @@
-# LumaTrace Enterprise Framework
+**# LumaTrace Enterprise Framework
 
 ![Build Status](https://img.shields.io/github/actions/workflow/status/tusuario/lumatrace/maven.yml?branch=main)
 ![Java](https://img.shields.io/badge/Java-21-orange)
@@ -96,7 +96,7 @@ The asset was subjected to aggressive degradation (JPEG compression, downsamplin
   ![Robustness Audit](./docs/screenshots/03-robustness-audit.png)
 
 ## Security Note
-The master key is managed via the LUMATRACE_MASTER_KEY environment variable defined in docker-compose.yml. Never hardcode 
-real keys in the source code.
+The master key and database credentials are managed via the .env file, which is injected into the containers at runtime.
+Never hardcode real keys in the source code.
 
-© 2026 LumaTrace Project.
+© 2026 LumaTrace Project.**
